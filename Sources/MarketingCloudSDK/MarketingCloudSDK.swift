@@ -1,9 +1,11 @@
+import Foundation
+
 public struct SFMCSdk {
-    static func initializeSdk(_ config: ConfigBuilder) {
+    public static func initializeSdk(_ config: ConfigBuilder) {
     }
     
-    public let mp = SFMCSdkMP()
-    public let identity = SFMCSdkIdentity()
+    public static let mp = SFMCSdkMP()
+    public static let identity = SFMCSdkIdentity()
 }
 
 public protocol MarketingCloudSDKURLHandlingDelegate {
@@ -16,11 +18,11 @@ public enum OperationResult: String {
 public struct SFMCSdkMP {
     init() {}
     
-    func setNotificationUserInfo(_ any: Any) {}
-    func setNotificationRequest(_ any: Any) {}
-    func setDeviceToken(_ any: Any) {}
-    func setPushEnabled(_ any: Any) {}
-    func contactKey() -> String { "placeholder" }
+    public func setNotificationUserInfo(_ any: Any) {}
+    public func setNotificationRequest(_ any: Any) {}
+    public func setDeviceToken(_ any: Any) {}
+    public func setPushEnabled(_ any: Any) {}
+    public func contactKey() -> String { "placeholder" }
 }
 
 public struct SFMCSdkIdentity {
@@ -32,7 +34,7 @@ public struct PushConfigBuilder {
     public init(appId: String) {}
     
     public func setAccessToken(_ token: String) -> Self { self }
-    public func setMarketingCloudServerUrl(_ url: String) -> Self { self }
+    public func setMarketingCloudServerUrl(_ url: URL) -> Self { self }
     public func setMid(_ something: Any) -> Self { self }
     public func setDelayRegistrationUntilContactKeyIsSet(_ flag: Bool) -> Self { self }
     public func setAnalyticsEnabled(_ flag: Bool) -> Self { self }
@@ -43,7 +45,10 @@ public struct PushConfigBuilder {
 public struct ConfigBuilder {
     public init() {}
     
-    public func setPush(config: PushConfigBuilder, completion: @escaping (OperationResult) -> Void) {
+    public func setPush(config: PushConfigBuilder, completion: @escaping (OperationResult) -> Void) -> Self {
         completion(.success)
+        return self
     }
+    
+    public func build() -> Self { self }
 }
